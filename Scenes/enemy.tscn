@@ -1,0 +1,81 @@
+[gd_scene load_steps=15 format=3 uid="uid://bkhmu0blgo2mt"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ndc6p"]
+[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="2_1jn3m"]
+[ext_resource type="PackedScene" uid="uid://bqwrtgkv4c6c3" path="res://Scenes/cpu_particles_2d.tscn" id="2_a8yjp"]
+[ext_resource type="Texture2D" uid="uid://5sdu2urrtjda" path="res://Assets/Trail.png" id="3_142if"]
+[ext_resource type="PackedScene" uid="uid://bwteavfj3wa1s" path="res://Scenes/health_component.tscn" id="3_geyn1"]
+[ext_resource type="PackedScene" uid="uid://swl3yrbkf0vd" path="res://Scenes/hurtbox_component.tscn" id="4_bxdaq"]
+[ext_resource type="PackedScene" uid="uid://c5bvke0qj2obh" path="res://Scenes/weapon.tscn" id="6_nooie"]
+[ext_resource type="PackedScene" uid="uid://bhoun54a1gfmy" path="res://Scenes/gpu_particles_2d.tscn" id="7_2vldb"]
+[ext_resource type="Script" path="res://Scripts/idle.gd" id="10_3i5yu"]
+[ext_resource type="Script" path="res://Scripts/wander.gd" id="11_p1c6q"]
+[ext_resource type="Script" path="res://Scripts/Death.gd" id="11_pxxb2"]
+[ext_resource type="Script" path="res://Scenes/patrol.gd" id="11_xje2c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqlb"]
+size = Vector2(57, 69)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0tho"]
+size = Vector2(68, 77)
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
+collision_layer = 4
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_ndc6p")
+blood = ExtResource("2_a8yjp")
+chase_radius_limit = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.23, 0.23, 1)
+scale = Vector2(0.445313, 0.546875)
+texture = ExtResource("3_142if")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_aqqlb")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_geyn1")]
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_bxdaq")]
+collision_layer = 16
+collision_mask = 64
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_u0tho")
+
+[node name="Weapon" parent="." instance=ExtResource("6_nooie")]
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("7_2vldb")]
+
+[node name="State" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -65.0
+offset_right = 24.0
+offset_bottom = -37.0
+theme_override_font_sizes/font_size = 20
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_1jn3m")
+initial_state = NodePath("Patrol")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("10_3i5yu")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("11_p1c6q")
+
+[node name="Patrol" type="Node" parent="StateMachine"]
+script = ExtResource("11_xje2c")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+
+[node name="Search" type="Node" parent="StateMachine"]
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("11_pxxb2")
+
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_death"]

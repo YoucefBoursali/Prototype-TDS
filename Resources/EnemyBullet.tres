@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BulletResource" load_steps=3 format=3 uid="uid://hu38qgkb6ypr"]
+
+[ext_resource type="Script" path="res://Data/BulletResource.gd" id="1_lwwhx"]
+[ext_resource type="Texture2D" uid="uid://dwnh0riv845iw" path="res://Assets/gun.png" id="2_kba5d"]
+
+[resource]
+script = ExtResource("1_lwwhx")
+texture = ExtResource("2_kba5d")
+bullet_count = 1
+arc = 0
+fire_rate = 0.5
+range = 300
+attack_damage = 3.0
+bullet_speed = 1000.0
+max_bullets = 12
+bullet_amount = 30

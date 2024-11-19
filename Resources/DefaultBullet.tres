@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BulletResource" load_steps=2 format=3 uid="uid://ck387pgcphshy"]
+
+[ext_resource type="Script" path="res://Data/BulletResource.gd" id="1_fgw2e"]
+
+[resource]
+script = ExtResource("1_fgw2e")
+bullet_count = 1
+arc = 30
+fire_rate = 0.8
+range = 300
+attack_damage = 3.0
+bullet_speed = 1500.0
+max_bullets = 24
+bullet_amount = 60

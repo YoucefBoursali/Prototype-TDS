@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqwrtgkv4c6c3"]
+
+[ext_resource type="Texture2D" uid="uid://bjn0rguj6atcn" path="res://Assets/circle.png" id="1_a15ta"]
+[ext_resource type="Script" path="res://Scripts/cpu_particles_2d.gd" id="2_6w6cf"]
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+z_index = -10
+emitting = false
+amount = 10
+lifetime = 0.3
+speed_scale = 1.5
+explosiveness = 0.5
+texture = ExtResource("1_a15ta")
+emission_shape = 1
+emission_sphere_radius = 50.0
+spread = 70.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 400.0
+scale_amount_min = 0.3
+scale_amount_max = 2.0
+color = Color(0.509275, 0.000570873, 0.000312609, 1)
+script = ExtResource("2_6w6cf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

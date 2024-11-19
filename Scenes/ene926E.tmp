@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://bkhmu0blgo2mt"]
+
+[ext_resource type="Texture2D" uid="uid://ces8dies8i76m" path="res://icon.svg" id="1_6vm8p"]
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ndc6p"]
+[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="2_1jn3m"]
+[ext_resource type="PackedScene" uid="uid://bwteavfj3wa1s" path="res://Scenes/health_component.tscn" id="3_geyn1"]
+[ext_resource type="Script" path="res://Scripts/idle.gd" id="3_rswd7"]
+[ext_resource type="PackedScene" uid="uid://swl3yrbkf0vd" path="res://Scenes/hurtbox_component.tscn" id="4_bxdaq"]
+[ext_resource type="Script" path="res://Scripts/wander.gd" id="5_kj6au"]
+[ext_resource type="Script" path="res://Scripts/fellow.gd" id="6_xsc62"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqlb"]
+size = Vector2(57, 69)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0tho"]
+size = Vector2(68, 77)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_ndc6p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.23, 0.23, 1)
+scale = Vector2(0.445313, 0.546875)
+texture = ExtResource("1_6vm8p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_aqqlb")
+
+[node name="Vision_cone" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Vision_cone"]
+polygon = PackedVector2Array(22, -20, 272, -126, 290, -71, 296, -22, 290, 45, 275, 98, 22, 20)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_geyn1")]
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_bxdaq")]
+visible = false
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_u0tho")
+
+[node name="State" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -65.0
+offset_right = 24.0
+offset_bottom = -37.0
+theme_override_font_sizes/font_size = 20
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_1jn3m")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_rswd7")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("5_kj6au")
+
+[node name="Fellow" type="Node" parent="StateMachine"]
+script = ExtResource("6_xsc62")

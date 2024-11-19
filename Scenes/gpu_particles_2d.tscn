@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhoun54a1gfmy"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jofen"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_galct"]
+_data = [Vector2(0, 0.0339622), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ndem"]
+curve = SubResource("Curve_galct")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_msae1"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 3.5
+emission_ring_inner_radius = 2.0
+gravity = Vector3(0, 0, 0)
+color = Color(1, 1, 0.47451, 0.247059)
+alpha_curve = SubResource("CurveTexture_3ndem")
+
+[sub_resource type="Gradient" id="Gradient_wao20"]
+offsets = PackedFloat32Array(0, 0.495652, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jjg5j"]
+gradient = SubResource("Gradient_wao20")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_jofen")
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_msae1")
+texture = SubResource("GradientTexture2D_jjg5j")
+fixed_fps = 60

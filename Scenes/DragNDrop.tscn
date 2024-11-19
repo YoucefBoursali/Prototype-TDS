@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://s8noo41t71cu"]
+
+[ext_resource type="Texture2D" uid="uid://ces8dies8i76m" path="res://icon.svg" id="1_rokus"]
+[ext_resource type="Script" path="res://Scripts/drag_n_drop.gd" id="2_1vf10"]
+
+[node name="TextureRect" type="TextureRect"]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_rokus")
+expand_mode = 1
+script = ExtResource("2_1vf10")
+
+[node name="Panel" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2

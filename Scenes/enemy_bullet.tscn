@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://f00ke6gqlqcp"]
+
+[ext_resource type="Texture2D" uid="uid://dfcsr4wfdp00h" path="res://Assets/bullet.png" id="1_bnjqb"]
+[ext_resource type="Script" path="res://Scripts/enemy_bullet.gd" id="1_ysvxl"]
+[ext_resource type="Resource" uid="uid://hu38qgkb6ypr" path="res://Resources/EnemyBullet.tres" id="2_r2g83"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d0bwa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ra6qu"]
+
+[node name="EnemyBullet" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_ysvxl")
+bullet_resource = ExtResource("2_r2g83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d0bwa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_bnjqb")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ra6qu")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(0.9, 1)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

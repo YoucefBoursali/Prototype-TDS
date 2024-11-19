@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5bvke0qj2obh"]
+
+[ext_resource type="Script" path="res://Scripts/weapon.gd" id="1_eo8ac"]
+[ext_resource type="PackedScene" uid="uid://f00ke6gqlqcp" path="res://Scenes/enemy_bullet.tscn" id="2_0t8y6"]
+[ext_resource type="Resource" uid="uid://hu38qgkb6ypr" path="res://Resources/EnemyBullet.tres" id="3_mfxng"]
+
+[node name="Weapon" type="Node2D" node_paths=PackedStringArray("shootingcooldown", "marker", "sprite")]
+script = ExtResource("1_eo8ac")
+bullets = ExtResource("2_0t8y6")
+bullet_resource = ExtResource("3_mfxng")
+shootingcooldown = NodePath("Timer")
+marker = NodePath("Marker2D")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+offset = Vector2(20, 0)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(36, -3)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true

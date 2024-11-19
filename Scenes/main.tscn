@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://y7a1ijjbp7f0"]
+
+[ext_resource type="PackedScene" uid="uid://ceptv2pomffmp" path="res://Scenes/player.tscn" id="1_hxunv"]
+[ext_resource type="PackedScene" uid="uid://bkhmu0blgo2mt" path="res://Scenes/enemy.tscn" id="1_nc6yu"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_ydr3r"]
+[ext_resource type="PackedScene" uid="uid://doxmuwy3qisxv" path="res://Scenes/walls.tscn" id="2_8w67g"]
+[ext_resource type="PackedScene" uid="uid://c1dbc4x6b7i61" path="res://Scenes/ui.tscn" id="5_vsag3"]
+[ext_resource type="PackedScene" uid="uid://cp4kk3i54pkmj" path="res://Scenes/death_screen.tscn" id="6_30ybs"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ymrtm"]
+polygon = PackedVector2Array(-2048, -1024, -1536, -1024, -1536, 1024, 512, 1024, 1024, 512, 1536, 512, 1536, 1024, 2048, 1024, 2048, -1024, 2560, -1024, 2560, 1536, -2048, 1536)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_s4pea"]
+polygon = PackedVector2Array(-2481, -1121, 2127, -1121, 2127, -1633, -2481, -1633)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wxmnn"]
+polygon = PackedVector2Array(-256, 576, 256, 576, 256, 1088, -256, 1088)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jtglp"]
+polygon = PackedVector2Array(-2304, 576, -1792, 576, -1792, 1472, -2304, 1472)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ydr3r")
+
+[node name="Player" parent="." instance=ExtResource("1_hxunv")]
+unique_name_in_owner = true
+position = Vector2(93, 257)
+metadata/_edit_lock_ = true
+
+[node name="Enemy" parent="." instance=ExtResource("1_nc6yu")]
+position = Vector2(-192, -896)
+rotation = -0.00743174
+metadata/_edit_group_ = true
+
+[node name="Walls" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Walls" parent="Walls" instance=ExtResource("2_8w67g")]
+color = Color(0.912289, 0.912289, 0.912289, 1)
+polygon = PackedVector2Array(-2048, -1024, -2048, 1536, 2560, 1536, 2560, -1024, 2048, -1024, 2048, 1024, 1536, 1024, 1536, 512, 1024, 512, 512, 1024, -1536, 1024, -1536, 512, -1536, -256, -1536, -1024)
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Walls"]
+visible = false
+occluder = SubResource("OccluderPolygon2D_ymrtm")
+
+[node name="Walls2" parent="Walls" instance=ExtResource("2_8w67g")]
+position = Vector2(433, 97)
+color = Color(0.913725, 0.913725, 0.913725, 1)
+polygon = PackedVector2Array(-2481, -1633, 2127, -1633, 2127, -1121, -2481, -1121)
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Walls2"]
+visible = false
+occluder = SubResource("OccluderPolygon2D_s4pea")
+
+[node name="Walls3" parent="Walls" instance=ExtResource("2_8w67g")]
+position = Vector2(1280, -1088)
+color = Color(0.913725, 0.913725, 0.913725, 1)
+polygon = PackedVector2Array(-256, 576, 256, 576, 256, 1088, -256, 1088)
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Walls3"]
+visible = false
+occluder = SubResource("OccluderPolygon2D_wxmnn")
+
+[node name="Walls4" parent="Walls" instance=ExtResource("2_8w67g")]
+position = Vector2(1280, -1088)
+color = Color(0.913725, 0.913725, 0.913725, 1)
+polygon = PackedVector2Array(-1792, 576, -1792, 1472, -2304, 1472, -2304, 576)
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Walls4"]
+visible = false
+occluder = SubResource("OccluderPolygon2D_jtglp")
+
+[node name="UI" parent="." instance=ExtResource("5_vsag3")]
+
+[node name="DeathScreen" parent="UI" instance=ExtResource("6_30ybs")]
+metadata/_edit_lock_ = true
