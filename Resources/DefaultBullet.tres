@@ -4,10 +4,9 @@
 
 [resource]
 script = ExtResource("1_fgw2e")
-bullet_count = 1
+bullet_count = 10
 arc = 30
 fire_rate = 0.8
-range = 300
 attack_damage = 3.0
 bullet_speed = 1500.0
 max_bullets = 24
